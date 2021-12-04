@@ -1,8 +1,9 @@
 Feature: Crear un Proyecto Nuevo
   Como usuario crear un nuevo proyecto para poder gestionarlo y hacer un seguimiento de este
 
+"""
   Scenario Outline: creacion completa
-    Given que el usuario ingresó un nombre: <nombre>
+    Given que el usuario ingresó un nombre: {nombre}
     And fecha de finalización estimada: <finalizacionEstimada>
     And fecha de finalización pedida: <finalizacionPedida>
     And fecha de comienzo: <inicio>
@@ -16,6 +17,7 @@ Feature: Crear un Proyecto Nuevo
       | torta | finalizacionEstimada | finalizacionPedida | inicio | 0.75 |
       | automovil | finalizacionEstimada | finalizacionPedida | inicio | 0.12 |
 
+"""
   Scenario: creacion simple
     Given que el usuario ingresó un nombre:
     When indica que desea crear el proyecto
