@@ -10,30 +10,15 @@ public class Proyecto {
     private long código;
     private String nombre;
     private String descripción;
-    private long legajo_líder;
+    private long legajoLíder;
     private int estado;
-
-    public Proyecto (long código, String nombre, String descripción, long legajo_líder, int estado){
-        this.código = código;
-        this.nombre = nombre;
-        this.descripción = descripción;
-        this.legajo_líder = Proyecto.this.legajo_líder;
-        this.estado = estado;
-    }
-
-    public Proyecto (String nombre, String descripción, long legajo_líder){
-        this.nombre = nombre;
-        this.descripción = descripción;
-        this.legajo_líder = legajo_líder;
-        this.estado = 0;
-    }
 
     public int getEstado() {
         return estado;
     }
 
     public long getLegajoLíder() {
-        return legajo_líder;
+        return legajoLíder;
     }
 
     public String getNombre() {
@@ -60,8 +45,8 @@ public class Proyecto {
         this.descripción = descripción;
     }
 
-    public void setLegajo_líder(long legajo_líder) {
-        this.legajo_líder = legajo_líder;
+    public void setLegajoLíder(long legajoLíder) {
+        this.legajoLíder = legajoLíder;
     }
 
     public void setNombre(String nombre) {
