@@ -1,6 +1,6 @@
 Feature: Agregar miembros al proyecto
   Como usuario quiero agregar nuevos miembros al proyecto para poder incluir atodos los integrantes
-
+"""
   Scenario: agregando correcto de un miembreo al equipo
     Given existe un proyecto
     And se selecciona un usuario que no es miembro del proyecto
@@ -43,7 +43,7 @@ Feature: Agregar miembros al proyecto
     But no se selecciona a nadie
     When indica que desea agregarlos
     Then el sistema informa al usuario que debe seleccionar a algún usuario para poder agregarlo al proyecto
-
+"""
   Scenario: agregar lider a un proyecto sin lider
     Given existe un proyecto
     But no tiene lider
