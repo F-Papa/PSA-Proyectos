@@ -2,14 +2,9 @@ package com.psa.proyectos.controladores;
 
 import com.psa.proyectos.modelos.Proyecto;
 import com.psa.proyectos.repositorios.RepositorioProyectos;
-import org.hibernate.annotations.NotFound;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -50,10 +45,7 @@ public class ControladorProyectos {
             proyecto.setNombre(nuevoProyecto.getNombre());
             return repositorio.save(proyecto);
         })
-            .orElseGet(() -> {
-                nuevoProyecto.setCódigo(código);
-                return repositorio.save(nuevoProyecto);
-            });
+            .orElseGet(() -> crear(nuevoProyecto));
     }
 
     //Eliminar
