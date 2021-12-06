@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Table(name="proyectos")
 public class Proyecto {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long código;

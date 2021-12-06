@@ -1,5 +1,6 @@
 package com.psa.proyectos.modelos;
 
+
 public class Empleado {
 
     private long legajo;

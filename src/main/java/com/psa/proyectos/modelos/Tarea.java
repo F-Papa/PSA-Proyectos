@@ -17,6 +17,7 @@ public class Tarea {
     private long códigoProyecto;
     private long AsignadaAEmpleado;
 
+
     public int getEstado() {
         return estado;
     }
