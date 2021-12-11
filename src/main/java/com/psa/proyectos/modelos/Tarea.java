@@ -1,6 +1,5 @@
 package com.psa.proyectos.modelos;
 import javax.persistence.*;
-import java.sql.Time;
 import java.time.Duration;
 
 @Entity
@@ -12,7 +11,7 @@ public class Tarea {
     private long código;
     private String nombre;
     private String descripción;
-    private Duration horasEstimadas;
+    private Duration duraciónEstimada;
     private int estado;
     private long códigoProyecto;
     private long AsignadaAEmpleado;
@@ -26,8 +25,8 @@ public class Tarea {
         return códigoProyecto;
     }
 
-    public Duration getHorasEstimadas() {
-        return horasEstimadas;
+    public Duration getDuraciónEstimada() {
+        return duraciónEstimada;
     }
 
     public String getNombre() {
@@ -62,8 +61,8 @@ public class Tarea {
         this.descripción = descripción;
     }
 
-    public void setHorasEstimadas(Duration horasEstimadas) {
-        this.horasEstimadas = horasEstimadas;
+    public void setDuraciónEstimada(Duration duraciónEstimada) {
+        this.duraciónEstimada = duraciónEstimada;
     }
 
     public void setNombre(String nombre) {

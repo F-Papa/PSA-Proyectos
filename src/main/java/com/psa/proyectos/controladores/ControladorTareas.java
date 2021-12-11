@@ -1,11 +1,10 @@
 package com.psa.proyectos.controladores;
 
-import com.psa.proyectos.modelos.Proyecto;
 import com.psa.proyectos.modelos.Tarea;
-import com.psa.proyectos.repositorios.RepositorioProyectos;
 import com.psa.proyectos.repositorios.RepositorioTareas;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +42,7 @@ public class ControladorTareas {
     Tarea reemplazar(@RequestBody Tarea nuevaTarea, @PathVariable(value = "id") long código) throws Exception {
 
         return repositorio.findById(código).map(tarea -> {
-            tarea.setHorasEstimadas(nuevaTarea.getHorasEstimadas());
+            tarea.setDuraciónEstimada(nuevaTarea.getDuraciónEstimada());
             tarea.setDescripción(nuevaTarea.getDescripción());
             tarea.setCódigoProyecto(nuevaTarea.getCódigoProyecto());
             tarea.setEstado(nuevaTarea.getEstado());
@@ -64,6 +63,17 @@ public class ControladorTareas {
     @PostMapping()
     Tarea crear(@RequestBody Tarea nuevaTarea){
         return repositorio.save(nuevaTarea);
+    }
+
+    //Crear para ticket
+    @PostMapping("/soporte")
+    Tarea crearParaTicket(@RequestBody Tarea nuevaTarea, @RequestParam(value = "ticket") String ticketID){
+
+        crear(nuevaTarea);
+        //Endpoint para vincular ticket con tarea (Mód. Soporte)
+        String url = "" + "?tarea=" + nuevaTarea.getCódigo();
+        RestTemplate restTemplate = new RestTemplate();
+        return nuevaTarea;
     }
 
 }
