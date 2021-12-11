@@ -13,12 +13,3 @@ public class ProyectosApplication {
 	}
 
 }
-
-//@RestController
-//class HolaMundo {
-//
-//	@GetMapping("/")
-//	String HolaMundo(){
-//		return "Hola, Mundo";
-//	}
-//}
