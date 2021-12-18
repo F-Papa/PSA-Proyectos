@@ -1,6 +1,7 @@
 package com.psa.proyectos.modelos;
 import javax.persistence.*;
 import java.time.Duration;
+import java.util.Objects;
 
 @Entity
 @Table(name="tareas")
@@ -14,8 +15,7 @@ public class Tarea {
     private Duration duraciónEstimada;
     private int estado;
     private long códigoProyecto;
-    private long AsignadaAEmpleado;
-
+    private long asignadaAEmpleado;
 
     public int getEstado() {
         return estado;
@@ -38,7 +38,7 @@ public class Tarea {
     }
 
     public long getAsignadaAEmpleado() {
-        return AsignadaAEmpleado;
+        return asignadaAEmpleado;
     }
 
     public String getDescripción() {
@@ -70,6 +70,31 @@ public class Tarea {
     }
 
     public void setAsignadaAEmpleado(long asignadaAEmpleado) {
-        AsignadaAEmpleado = asignadaAEmpleado;
+        this.asignadaAEmpleado = asignadaAEmpleado;
+    }
+
+    public boolean esIgual(Tarea otraTarea){
+        boolean esIgual = true;
+
+        if (this.nombre.compareTo(otraTarea.nombre) != 0)
+            esIgual = false;
+
+        if (this.estado != otraTarea.estado)
+            esIgual = false;
+
+        if (!Objects.equals(this.descripción, otraTarea.descripción))
+            esIgual = false;
+
+        if (this.asignadaAEmpleado != otraTarea.asignadaAEmpleado)
+            esIgual = false;
+
+        if (this.duraciónEstimada != null){
+            if (this.duraciónEstimada.compareTo(otraTarea.duraciónEstimada) != 0)
+                esIgual = false;
+        }
+        else if (otraTarea.duraciónEstimada != null)
+            esIgual = false;
+
+        return esIgual;
     }
 }

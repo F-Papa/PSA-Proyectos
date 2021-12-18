@@ -2,12 +2,16 @@ package com.psa.proyectos.controladores;
 
 import com.psa.proyectos.modelos.Proyecto;
 import com.psa.proyectos.repositorios.RepositorioProyectos;
+import org.apache.coyote.Response;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("proyectos")
 public class ControladorProyectos {
@@ -37,16 +41,27 @@ public class ControladorProyectos {
 
     //Actualizar
     @PutMapping("/{id}")
-    Proyecto reemplazar(@RequestBody Proyecto nuevoProyecto, @PathVariable(value = "id") long código) throws Exception {
+    ResponseEntity reemplazar(@RequestBody Proyecto nuevoProyecto, @PathVariable(value = "id") long código) throws Exception {
 
-        return repositorio.findById(código).map(proyecto -> {
-            proyecto.setLegajoLíder(nuevoProyecto.getLegajoLíder());
-            proyecto.setDescripción(nuevoProyecto.getDescripción());
-            proyecto.setEstado(nuevoProyecto.getEstado());
-            proyecto.setNombre(nuevoProyecto.getNombre());
-            return repositorio.save(proyecto);
-        })
-            .orElseGet(() -> crear(nuevoProyecto));
+        AtomicBoolean actualizadoAtomic = new AtomicBoolean(false);
+
+        Proyecto p = repositorio.findById(código).map(proyecto -> {
+
+            if(!proyecto.esIgualA(nuevoProyecto) && nuevoProyecto.getNombre() != null){
+                proyecto.setLegajoLíder(nuevoProyecto.getLegajoLíder());
+                proyecto.setDescripción(nuevoProyecto.getDescripción());
+                proyecto.setFechaDeComienzo(nuevoProyecto.getFechaDeComienzo());
+                proyecto.setEstado(nuevoProyecto.getEstado());
+                proyecto.setNombre(nuevoProyecto.getNombre());
+                actualizadoAtomic.set(true);
+                return repositorio.save(proyecto);
+            }
+            return proyecto;
+
+            }).orElseGet(() -> crear(nuevoProyecto).getBody());
+
+        return ResponseEntity.status(((actualizadoAtomic.get())? HttpStatus.OK : HttpStatus.NOT_MODIFIED)).body(p);
+
     }
 
     //Eliminar
@@ -57,8 +72,14 @@ public class ControladorProyectos {
 
     //Crear
     @PostMapping()
-    Proyecto crear(@RequestBody Proyecto nuevoProyecto){
-        return repositorio.save(nuevoProyecto);
+    ResponseEntity<Proyecto> crear(@RequestBody Proyecto nuevoProyecto){
+
+        if (nuevoProyecto.getNombre() == null)
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+        else
+            return ResponseEntity.status(HttpStatus.OK).body(repositorio.save(nuevoProyecto));
+
     }
 
 }
+

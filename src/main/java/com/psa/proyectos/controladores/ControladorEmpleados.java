@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("empleados")
 public class ControladorEmpleados {

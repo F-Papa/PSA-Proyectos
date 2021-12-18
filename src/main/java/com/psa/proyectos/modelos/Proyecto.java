@@ -1,5 +1,7 @@
 package com.psa.proyectos.modelos;
 import javax.persistence.*;
+import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name="proyectos")
@@ -13,6 +15,23 @@ public class Proyecto {
     private String descripción;
     private long legajoLíder;
     private int estado;
+    private Date fechaDeComienzo;
+
+//    public Proyecto(){
+//
+//    }
+//
+//    public Proyecto(String nombre, String descripción, long legajoLíder, String fechaDeComienzo){
+//        this.nombre = nombre;
+//        this.descripción = descripción;
+//        this.legajoLíder = legajoLíder;
+//        if (fechaDeComienzo != null)
+//        this.fechaDeComienzo = Date.valueOf(fechaDeComienzo);
+//    }
+//
+//    public String getFechaDeComienzoString(){
+//        return fechaDeComienzo.toString();
+//    }
 
     public int getEstado() {
         return estado;
@@ -52,5 +71,38 @@ public class Proyecto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Date getFechaDeComienzo() {
+        return fechaDeComienzo;
+    }
+
+    public void setFechaDeComienzo(Date fechaDeComienzo) {
+        this.fechaDeComienzo = fechaDeComienzo;
+    }
+
+    public boolean esIgualA(Proyecto otroProyecto){
+        boolean esIgual = true;
+
+        if (this.nombre.compareTo(otroProyecto.nombre) != 0)
+            esIgual = false;
+
+        if (this.estado != otroProyecto.estado)
+            esIgual = false;
+
+        if (!Objects.equals(this.descripción, otroProyecto.descripción))
+            esIgual = false;
+
+        if (this.legajoLíder != otroProyecto.legajoLíder)
+            esIgual = false;
+
+        if (this.fechaDeComienzo != null){
+            if (this.fechaDeComienzo.compareTo(otroProyecto.fechaDeComienzo) != 0)
+                esIgual = false;
+        }
+        else if (otroProyecto.fechaDeComienzo != null)
+                esIgual = false;
+
+        return esIgual;
     }
 }
