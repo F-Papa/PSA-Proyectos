@@ -90,17 +90,6 @@ public class ControladorTareas {
 
     }
 
-    //Crear para ticket
-    @PostMapping("/soporte")
-    Tarea crearParaTicket(@RequestBody Tarea nuevaTarea, @RequestParam(value = "ticket") String ticketID){
-
-        crear(nuevaTarea);
-        //Endpoint para vincular ticket con tarea (Mód. Soporte)
-        String url = "" + "?tarea=" + nuevaTarea.getCódigo();
-        RestTemplate restTemplate = new RestTemplate();
-        return nuevaTarea;
-    }
-
     @DeleteMapping("/vinculadas/{id}")
     public void borrarTareasVinculadas(@PathVariable(value = "id") long códigoProyecto){
         ArrayList<Tarea> tareas = (ArrayList<Tarea>)repositorio.findAll();
