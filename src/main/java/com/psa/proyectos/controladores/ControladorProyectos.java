@@ -58,7 +58,7 @@ public class ControladorProyectos {
 
             }).orElseGet(() -> crear(nuevoProyecto).getBody());
 
-        return ResponseEntity.status(((actualizadoAtomic.get())? HttpStatus.OK : HttpStatus.NOT_FOUND)).body(p);
+        return ResponseEntity.status(((actualizadoAtomic.get())? HttpStatus.OK : HttpStatus.NOT_MODIFIED)).body(p);
 
     }
 
