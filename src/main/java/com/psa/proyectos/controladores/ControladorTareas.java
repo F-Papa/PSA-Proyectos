@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,17 +32,14 @@ public class ControladorTareas {
     @GetMapping("/vinculadas/{id}")
     ResponseEntity<List<Tarea>> porProyecto(@PathVariable(value = "id") long código) throws Exception {
 
-        List<Tarea> tareas = repositorio.findAll();
+        ArrayList<Tarea> tareas = (ArrayList<Tarea>)repositorio.findAll();
+        ArrayList<Tarea> tareasVinculadas = new ArrayList<>();
 
         for(Tarea t: tareas){
-            if (t.getCódigoProyecto() != código)
-                tareas.remove(t);
+            if (t.getCódigoProyecto() == código)
+                tareasVinculadas.add(t);
         }
-
-        if (tareas.size() > 0)
-            return ResponseEntity.status(200).body(tareas);
-        else
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.status(200).body(tareasVinculadas);
     }
 
 
@@ -103,4 +101,12 @@ public class ControladorTareas {
         return nuevaTarea;
     }
 
+    @DeleteMapping("/vinculadas/{id}")
+    public void borrarTareasVinculadas(@PathVariable(value = "id") long códigoProyecto){
+        ArrayList<Tarea> tareas = (ArrayList<Tarea>)repositorio.findAll();
+        for(Tarea t: tareas){
+            if (t.getCódigoProyecto() == códigoProyecto)
+                repositorio.deleteById(t.getCódigo());
+        }
+    }
 }

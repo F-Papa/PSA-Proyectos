@@ -84,7 +84,7 @@ public class Proyecto {
     public boolean esIgualA(Proyecto otroProyecto){
         boolean esIgual = true;
 
-        if (this.nombre.compareTo(otroProyecto.nombre) != 0)
+        if (!Objects.equals(this.nombre, otroProyecto.nombre))
             esIgual = false;
 
         if (this.estado != otroProyecto.estado)

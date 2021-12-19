@@ -12,7 +12,7 @@ public class Tarea {
     private long código;
     private String nombre;
     private String descripción;
-    private Duration duraciónEstimada;
+    private int duraciónEstimada;
     private int estado;
     private long códigoProyecto;
     private long asignadaAEmpleado;
@@ -25,12 +25,12 @@ public class Tarea {
         return códigoProyecto;
     }
 
-    public Duration getDuraciónEstimada() {
-        return duraciónEstimada;
-    }
-
     public String getNombre() {
         return nombre;
+    }
+
+    public int getDuraciónEstimada() {
+        return duraciónEstimada;
     }
 
     public long getCódigo() {
@@ -61,7 +61,7 @@ public class Tarea {
         this.descripción = descripción;
     }
 
-    public void setDuraciónEstimada(Duration duraciónEstimada) {
+    public void setDuraciónEstimada(int duraciónEstimada) {
         this.duraciónEstimada = duraciónEstimada;
     }
 
@@ -73,7 +73,7 @@ public class Tarea {
         this.asignadaAEmpleado = asignadaAEmpleado;
     }
 
-    public boolean esIgual(Tarea otraTarea){
+    public boolean esIgual(Tarea otraTarea) {
         boolean esIgual = true;
 
         if (this.nombre.compareTo(otraTarea.nombre) != 0)
@@ -88,11 +88,7 @@ public class Tarea {
         if (this.asignadaAEmpleado != otraTarea.asignadaAEmpleado)
             esIgual = false;
 
-        if (this.duraciónEstimada != null){
-            if (this.duraciónEstimada.compareTo(otraTarea.duraciónEstimada) != 0)
-                esIgual = false;
-        }
-        else if (otraTarea.duraciónEstimada != null)
+        if (this.duraciónEstimada != otraTarea.duraciónEstimada)
             esIgual = false;
 
         return esIgual;

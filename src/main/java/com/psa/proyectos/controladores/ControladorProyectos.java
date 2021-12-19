@@ -2,11 +2,9 @@ package com.psa.proyectos.controladores;
 
 import com.psa.proyectos.modelos.Proyecto;
 import com.psa.proyectos.repositorios.RepositorioProyectos;
-import org.apache.coyote.Response;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Date;
+import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -60,7 +58,7 @@ public class ControladorProyectos {
 
             }).orElseGet(() -> crear(nuevoProyecto).getBody());
 
-        return ResponseEntity.status(((actualizadoAtomic.get())? HttpStatus.OK : HttpStatus.NOT_MODIFIED)).body(p);
+        return ResponseEntity.status(((actualizadoAtomic.get())? HttpStatus.OK : HttpStatus.NOT_FOUND)).body(p);
 
     }
 
@@ -68,6 +66,11 @@ public class ControladorProyectos {
     @DeleteMapping("{id}")
     void eliminar(@PathVariable(value = "id") long código){
         repositorio.deleteById(código);
+
+        String url = "https://psa-proyectos-12.herokuapp.com/tareas/vinculadas/"+código;
+        RestTemplate restTemplate = new RestTemplate();
+        System.out.println("URL: "+url);
+        restTemplate.delete(url);
     }
 
     //Crear
