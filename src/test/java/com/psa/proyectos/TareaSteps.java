@@ -73,4 +73,19 @@ public class TareaSteps {
     @And("informa a quien la creo de la nesesidad de vincularla a un proyecto")
     public void informaAQuienLaCreoDeLaNesesidadDeVincularlaAUnProyecto() { }
 
+
+    @Given("que el usuario ingresó además de la obligatoria la información opcional: {string} , {int} , {int}, {string}")
+    public void que_el_usuario_ingresó_además_de_la_obligatoria_la_información_opcional_empleado_asignado_duración_estimada_y_descripción(
+            String nombre, int empleado, int duracion_estimada,  String descripcion) {
+            tarea.setNombre(nombre);
+            tarea.setAsignadaAEmpleado(empleado);
+            tarea.setDuraciónEstimada(duracion_estimada);
+            tarea.setDescripción(descripcion);
+    }
+
+    @Then("El sistema registra la tarea con la información ingresada y notifica al usuario")
+    public void el_sistema_registra_la_tarea_con_la_información_ingresada_y_notifica_al_usuario() {
+            Assert.assertEquals(200, miEstado);
+    }
+
 }

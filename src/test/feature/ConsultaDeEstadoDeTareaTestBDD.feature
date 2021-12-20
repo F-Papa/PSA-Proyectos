@@ -1,4 +1,4 @@
-Feature: Consultar estado de tarea
+Feature: CONSULTA_CORRECTA
   Como usuario quiero conocer el estado de una tarea para saber si tengo que trabajar en ella
 
   Scenario Outline: Consulta de estado de tarea correcta

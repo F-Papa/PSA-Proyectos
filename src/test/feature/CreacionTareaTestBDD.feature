@@ -27,17 +27,13 @@ Feature: Crear una Tarea nueva
 
     Examples:
       |nombre      |   codigo_proyecto       |
-      | no_ingresado |      no_ingresado          |
+      | "no_ingresado" |      no_ingresado          |
 
 
-#  Scenario Outline: sin proyecto
-#    Given que el usuario ingresó un nombre para la tarea
-#    |<nombre>|
-#    And no las horas estimadas
-#    But no el proyecto al que pertenecerá
-#    When el usuario indica que desea crearla
-#    Then el sistema no registra la tarea
-#    And informa a quien la creo de la nesesidad de vincularla a un proyecto
-#    Examples:
-#      |nombre  |
-#      |pedirReunion|
+  Scenario Outline: CAMPOS_OPCIONALES
+    Given que el usuario ingresó además de la obligatoria la información opcional: <nombre> , <empleado> , <duracion_estimada>, <descripcion>
+    When el usuario indica que desea crearla
+    Then El sistema registra la tarea con la información ingresada y notifica al usuario
+    Examples:
+      |nombre  | empleado       | duracion_estimada|  descripcion |
+      | "ingresado" |      3          |  2        |  "ingresado"   |

@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         plugin = {"pretty"},
-        features = "src/test/feature/LiderProyectoTestBDD.feature"
+        features = "src/test/feature/AsignarLiderProyectoTestBDD.feature"
 )
 
 public class AsignarLiderRunner { }
