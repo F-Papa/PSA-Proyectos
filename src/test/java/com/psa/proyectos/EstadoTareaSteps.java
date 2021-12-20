@@ -36,7 +36,15 @@ public class EstadoTareaSteps {
         Map<String, String> urlParams = new HashMap<>(1);
         urlParams.put("id", String.valueOf(codigo_tarea));
         Tarea miTarea = restTemplate.getForObject(url, Tarea.class, urlParams);
-
+        int i;
+        for (i = 156; i <= 159; i++){
+            String url2 = Url+"/"+i;
+            Tarea unaTarea;
+            Map<String, String> urlParams2 = new HashMap<>(1);
+            urlParams.put("id", String.valueOf(codigo_tarea));
+            unaTarea = restTemplate.getForObject(url, Tarea.class, urlParams2);
+            restTemplate.delete( url2);
+        }
         assertNotNull(miTarea.getEstado());
     }
 
