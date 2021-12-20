@@ -1,30 +1,43 @@
 Feature: Crear una Tarea nueva
   Como usuario quiero agregar nuevas tareas al proyecto para avanzar con la realización del proyecto
 
-  Scenario: creacion correcta
-    Given que el usuario ingresó un nombre para la tarea
-    And las horas estimadas
-    And el proyecto al que pertenecerá
+ Scenario Outline:  CAMPOS_OBLIGATORIOS
+    Given que el usuario ingresó la información obligatoria: nombre de la tarea
+      |  <nombre>  |
+   And el proyecto al que pertenecerá
+     | <codigo_proyecto> |
     When el usuario indica que desea crearla
     Then el sistema registra la tarea
     And la vincula al proyecto ingresado
+   | <codigo_proyecto> |
     And informa a quienes fueron agregados
     And informa a quien la creo del exito
 
-  Scenario: sin horas estimadas
-    Given que el usuario ingresó un nombre para la tarea
-    And el proyecto al que pertenecerá
-    But no las horas estimadas
-    When el usuario indica que desea crearla
-    Then el sistema registra la tarea
-    And la vincula al proyecto ingresado
-    And informa a quienes fueron agregados
-    And informa a quien la creo del exito
+   Examples:
+     |nombre          |    codigo_proyecto     |
+     | prepararMinuta |       10        |
 
-  Scenario: sin proyecto
-    Given que el usuario ingresó un nombre para la tarea
-    And no las horas estimadas
-    But no el proyecto al que pertenecerá
+  Scenario Outline: CAMPOS_OBLIGATORIOS_VACÍOS
+    Given que el usuario ingresó la información obligatoria: nombre de la tarea
+      | <nombre>  |
+    And no el proyecto al que pertenecerá
+      |<codigo_proyecto>|
     When el usuario indica que desea crearla
-    Then el sistema no registra la tarea
-    And informa a quien la creo de la nesesidad de vincularla a un proyecto
+    Then El sistema no registra la tarea e informa al usuario que debe ingresar la información obligatoria
+
+    Examples:
+      |nombre      |   codigo_proyecto       |
+      | no_ingresado |      no_ingresado          |
+
+
+#  Scenario Outline: sin proyecto
+#    Given que el usuario ingresó un nombre para la tarea
+#    |<nombre>|
+#    And no las horas estimadas
+#    But no el proyecto al que pertenecerá
+#    When el usuario indica que desea crearla
+#    Then el sistema no registra la tarea
+#    And informa a quien la creo de la nesesidad de vincularla a un proyecto
+#    Examples:
+#      |nombre  |
+#      |pedirReunion|
