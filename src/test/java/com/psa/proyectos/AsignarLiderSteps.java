@@ -16,6 +16,8 @@ public class AsignarLiderSteps {
     Proyecto proyectoEsperado;
     private int legajoLider;
     int miEstado;
+    String url = "https://psa-proyectos-12.herokuapp.com/proyectos";
+    RestTemplate resTemplate = new RestTemplate();
 
     @Given("existe un proyecto")
     public void existeUnProyecto() {
@@ -32,8 +34,6 @@ public class AsignarLiderSteps {
         this.legajoLider = legajoLider;
         proyecto.setNombre("SistemaDeInscripcion");
         proyecto.setLegajoLíder(legajoLider);
-        String url = "https://psa-proyectos-12.herokuapp.com/proyectos";
-        RestTemplate resTemplate = new RestTemplate();
         ResponseEntity<Proyecto> response = resTemplate.postForEntity(url, proyecto, Proyecto.class);
         this.proyectoEsperado = response.getBody();
         this.miEstado = response.getStatusCodeValue();
@@ -42,6 +42,7 @@ public class AsignarLiderSteps {
     @Then("el sistema agrega al usuario seleccionado al proyecto en forma de lider")
     public void elSistemaAgregaAlUsuarioSeleccionadoAlProyectoEnFormaDeLider() {
         Assert.assertEquals(proyecto.getLegajoLíder(), legajoLider);
+        resTemplate.delete( url+ "/" + proyectoEsperado.getCódigo());
     }
 
     @And("el sistema le informa al usuario")
@@ -54,6 +55,9 @@ public class AsignarLiderSteps {
     public void tieneLider(){ Assert.assertNotNull(proyecto.getLegajoLíder()); }
 
     @Then("el sistema le informa a quién lo agrego que el proyecto ya tiene lider")
-    public void elSistemaLeInformaAQuiénLoAgregoQueElProyectoYaTieneLider() { Assert.assertEquals(200, miEstado);}
+    public void elSistemaLeInformaAQuiénLoAgregoQueElProyectoYaTieneLider() {
+        Assert.assertEquals(200, miEstado);
+        resTemplate.delete( url+ "/" + proyectoEsperado.getCódigo());
+    }
 
 }

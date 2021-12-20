@@ -1,6 +1,6 @@
 package com.psa.proyectos;
 
-import com.psa.proyectos.modelos.Proyecto;
+import com.psa.proyectos.modelos.Tarea;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -17,7 +17,7 @@ public class EstadoTareaSteps {
 
     @LocalServerPort
     private RestTemplate restTemplate = new RestTemplate();
-    private String Url = "https://psa-proyectos-12.herokuapp.com/proyectos";
+    private String Url = "https://psa-proyectos-12.herokuapp.com/tareas";
     private long codigo_tarea;
 
 
@@ -35,9 +35,9 @@ public class EstadoTareaSteps {
         String url = Url+"/"+codigo_tarea;
         Map<String, String> urlParams = new HashMap<>(1);
         urlParams.put("id", String.valueOf(codigo_tarea));
-        Proyecto miProyecto= restTemplate.getForObject(url, Proyecto.class, urlParams);
+        Tarea miTarea = restTemplate.getForObject(url, Tarea.class, urlParams);
 
-        assertNotNull(miProyecto.getEstado());
+        assertNotNull(miTarea.getEstado());
     }
 
 }

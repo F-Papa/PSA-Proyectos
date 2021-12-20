@@ -15,6 +15,8 @@ public class TareaSteps {
     Tarea tarea = new Tarea();
     Tarea tareaEsperada;
     int miEstado;
+    String url = "https://psa-proyectos-12.herokuapp.com/tareas";
+    RestTemplate resTemplate = new RestTemplate();
 
     @Given("que el usuario ingresó la información obligatoria: nombre de la tarea")
     public void queElUsuarioIngresóUnNombreParaLaTarea(String nombre) {
@@ -27,8 +29,6 @@ public class TareaSteps {
     @When("el usuario indica que desea crearla")
     public void elUsuarioIndicaQueDeseaCrearla() {
         if( tarea.getNombre() != "no_ingresado" ) {
-            String url = "https://psa-proyectos-12.herokuapp.com/tareas";
-            RestTemplate resTemplate = new RestTemplate();
             ResponseEntity<Tarea> response = resTemplate.postForEntity(url, tarea, Tarea.class);
             this.tareaEsperada = response.getBody();
             this.miEstado = response.getStatusCodeValue();
@@ -40,6 +40,7 @@ public class TareaSteps {
     @Then("el sistema registra la tarea")
     public void elSistemaRegistraLaTarea() {
         Assert.assertEquals(200, miEstado);
+        resTemplate.delete( url+ "/" + tareaEsperada.getCódigo());
     }
 
     @And("la vincula al proyecto ingresado")
@@ -64,10 +65,12 @@ public class TareaSteps {
 
     @Then("El sistema no registra la tarea e informa al usuario que debe ingresar la información obligatoria")
     public void elSistemaNoRegistraLaTarea() throws IOException {
-        URL url = new URL("https://psa-proyectos-12.herokuapp.com/tareas/00000");
-        HttpURLConnection http = (HttpURLConnection)url.openConnection();
+        URL url2 = new URL("https://psa-proyectos-12.herokuapp.com/tareas/00000");
+        HttpURLConnection http = (HttpURLConnection)url2.openConnection();
         int statusCode = http.getResponseCode();
         Assert.assertEquals(404, statusCode);
+
+        resTemplate.delete( url+ "/" + tareaEsperada.getCódigo());
     }
 
     @And("informa a quien la creo de la nesesidad de vincularla a un proyecto")
@@ -86,6 +89,7 @@ public class TareaSteps {
     @Then("El sistema registra la tarea con la información ingresada y notifica al usuario")
     public void el_sistema_registra_la_tarea_con_la_información_ingresada_y_notifica_al_usuario() {
             Assert.assertEquals(200, miEstado);
+            resTemplate.delete( url+ "/" + tareaEsperada.getCódigo());
     }
 
 }

@@ -16,6 +16,9 @@ public class ProyectoSteps {
 
     Proyecto proyecto = new Proyecto();
     Proyecto proyectoEsperado;
+    RestTemplate resTemplate = new RestTemplate();
+    ResponseEntity<Proyecto> response;
+    String url = "https://psa-proyectos-12.herokuapp.com/proyectos/";
     int miEstado;
 
     @Given("el usuario ingreso la informacion obligatoria")
@@ -26,9 +29,7 @@ public class ProyectoSteps {
     @When("indica que desea crear el proyecto")
     public void  que_el_usuario_quiere_crear_el_proyecto(){
         if( proyecto.getNombre() != "no_ingresado" ){
-            String url = "https://psa-proyectos-12.herokuapp.com/proyectos";
-            RestTemplate resTemplate = new RestTemplate();
-            ResponseEntity<Proyecto> response = resTemplate.postForEntity(url, proyecto, Proyecto.class);
+            this.response = resTemplate.postForEntity(url, proyecto, Proyecto.class);
             this.proyectoEsperado = response.getBody();
             this.miEstado = response.getStatusCodeValue();
         }
@@ -37,6 +38,7 @@ public class ProyectoSteps {
     @Then("El sistema crea el proyecto con la información ingresada y notifica al usuario.")
     public void el_sistema_crea_el_proyecto_con_la_información_ingresada_y_notifica_al_usuario() {
         Assert.assertEquals(200, miEstado);
+        resTemplate.delete( url+proyectoEsperado.getCódigo());
     }
 
     @Given("que el usuario no ingresó la información obligatoria: Nombre del proyecto")
@@ -46,10 +48,11 @@ public class ProyectoSteps {
 
     @Then("El sistema no crea el proyecto e informa al usuario que debe ingresar la información obligatoria.")
     public void el_sistema_no_crea_el_proyecto_e_informa_al_usuario_que_debe_ingresar_la_información_obligatoria() throws IOException {
-            URL url = new URL("https://psa-proyectos-12.herokuapp.com/proyectos/00000");
-            HttpURLConnection http = (HttpURLConnection)url.openConnection();
+            URL url2 = new URL("https://psa-proyectos-12.herokuapp.com/proyectos/00000");
+            HttpURLConnection http = (HttpURLConnection)url2.openConnection();
             int statusCode = http.getResponseCode();
             Assert.assertEquals(404, statusCode);
+            resTemplate.delete(url + proyectoEsperado.getCódigo());
     }
 
     @Given("que el usuario ingresó además de la obligatoria la información opcional, {string} , {int} , {int}")

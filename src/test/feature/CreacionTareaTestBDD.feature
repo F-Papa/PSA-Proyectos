@@ -15,7 +15,7 @@ Feature: Crear una Tarea nueva
 
    Examples:
      |nombre          |    codigo_proyecto     |
-     | prepararMinuta |       10        |
+     | "ingresado" |       10        |
 
   Scenario Outline: CAMPOS_OBLIGATORIOS_VACÍOS
     Given que el usuario ingresó la información obligatoria: nombre de la tarea

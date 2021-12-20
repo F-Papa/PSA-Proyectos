@@ -9,4 +9,4 @@ Feature: CONSULTA_CORRECTA
 
     Examples:
       |  codigo   |
-      |     2      |
+      |     6      |
